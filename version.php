@@ -28,4 +28,5 @@ $plugin->component = 'local_greetings';
 $plugin->release = '0.1.0';
 $plugin->version = 2022091100;
 $plugin->requires = 2021051700;
-$plugin->maturity = MATURITY_ALPHA; 
+$plugin->maturity = MATURITY_ALPHA;
+ 
