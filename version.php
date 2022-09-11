@@ -18,7 +18,7 @@
  * Plugin version and other meta-data are defined here.
  *
  * @package     local_greetings
- * @copyright   2022 Your Name <you@example.com>
+ * @copyright   2022 Esther <you@example.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,4 +28,4 @@ $plugin->component = 'local_greetings';
 $plugin->release = '0.1.0';
 $plugin->version = 2022091100;
 $plugin->requires = 2021051700;
-$plugin->maturity = MATURITY_ALPHA;
+$plugin->maturity = MATURITY_ALPHA; 
