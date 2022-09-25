@@ -33,7 +33,7 @@ if (isguestuser()) {
     throw new moodle_exception('noguest');
 }
 
-
+$allowpost = has_capability('local/greetings:postmessages', $context);
 $messageform = new local_greetings_message_form();
 echo $OUTPUT->header();
 if (isloggedin()) {
@@ -41,7 +41,10 @@ if (isloggedin()) {
 } else {
     echo get_string('greetinguser', 'local_greetings');
 }
-$messageform->display();
+
+if ($allowpost) {
+    $messageform->display();
+}
 
 $userfields = \core_user\fields::for_name()->with_identity($context);
 $userfieldssql = $userfields->get_sql('u');
@@ -74,6 +77,8 @@ foreach ($messages as $m) {
 echo $OUTPUT->box_end();
 
 if ($data = $messageform->get_data()) {
+
+    require_capability('local/greetings:postmessages', $context);
     $message = required_param('message', PARAM_TEXT);
 
     if (!empty($message)) {
