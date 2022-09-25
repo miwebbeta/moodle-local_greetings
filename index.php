@@ -29,11 +29,40 @@ $PAGE->set_title($SITE->fullname);
 $PAGE->set_heading(get_string('pluginname', 'local_greetings'));
 
 require_login();
+
 if (isguestuser()) {
     throw new moodle_exception('noguest');
 }
 
+
+
 $allowpost = has_capability('local/greetings:postmessages', $context);
+$deletepost = has_capability('local/greetings:deleteownmessage', $context);
+$deleteanypost = has_capability('local/greetings:deleteanymessage', $context);
+
+$action = optional_param('action', '', PARAM_TEXT);
+
+if ($action == 'del') {
+    require_sesskey();
+
+    $id = required_param('id', PARAM_TEXT);
+
+    if ($deleteanypost || $deletepost) {
+        $params = array('id' => $id);
+
+        // Users without permission should only delete their own post.
+        if(!$deleteanypost) {
+            $params += ['userid' => $USER->id];
+        }
+
+        // TODO: Confirm before deleting.
+        $DB->delete_records('local_greetings_messages', $params);
+
+        redirect($PAGE->url);
+    }
+}    
+
+
 $messageform = new local_greetings_message_form();
 echo $OUTPUT->header();
 if (isloggedin()) {
